@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, UniqueConstraint, DateTime, ForeignKey, Table
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from datetime import datetime
@@ -26,7 +26,7 @@ class Factory(Base):
 
 class Manager(Base):
     __tablename__ = 'managers'
-    __table_args__ = (UniqueConstraint('email', name='unique_email'),)
+    # __table_args__ = (UniqueConstraint('email', name='unique_email'),)
     id = Column(Integer, primary_key=True)
     first_name = Column(String)
     last_name = Column(String)
@@ -46,7 +46,7 @@ class Manager(Base):
 
 class Employee(Base):
     __tablename__ = 'employees'
-    __table_args__ = (UniqueConstraint('email', name='unique_email'),)
+    # __table_args__ = (UniqueConstraint('email', name='unique_email'),)
     id = Column(Integer, primary_key=True)
     first_name = Column(String)
     last_name = Column(String)
