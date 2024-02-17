@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String, UniqueConstraint, DateTime, ForeignKey, Table
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import relationship, sessionmaker
 from datetime import datetime
 
 engine = create_engine('sqlite:///factory_data.db')
@@ -31,7 +31,7 @@ class Manager(Base):
     first_name = Column(String)
     last_name = Column(String)
     gender = Column(String)
-    Joined_date = Column(DateTime, default=datetime.now)
+    joined_date = Column(DateTime, default=datetime.now)
     email = Column(String)
     employee_no = Column(String)
     salary_type = Column(String)
@@ -42,6 +42,8 @@ class Manager(Base):
     factory = relationship("Factory", back_populates="managers")
     factory_id = Column(Integer, ForeignKey('factories.id'))
 
+    shifts = relationship("Shift", back_populates="manager")
+
 class Employee(Base):
     __tablename__ = 'employees'
     __table_args__ = (UniqueConstraint('email', name='unique_email'),)
@@ -49,7 +51,7 @@ class Employee(Base):
     first_name = Column(String)
     last_name = Column(String)
     gender = Column(String)
-    Joined_date = Column(DateTime, default=datetime.now)
+    joined_date = Column(DateTime, default=datetime.now)
     email = Column(String)
     employee_no = Column(String)
     salary_type = Column(String)
@@ -74,3 +76,12 @@ class Shift(Base):
 
     manager_id = Column(Integer, ForeignKey("managers.id"))
     manager = relationship("Manager", back_populates="shifts")
+
+# Create tables
+Base.metadata.create_all(engine)
+
+# Create session
+Session = sessionmaker(bind=engine)
+session = Session()
+
+# Your test data and assertions can follow here...
