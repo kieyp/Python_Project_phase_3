@@ -77,11 +77,3 @@ class Shift(Base):
     manager_id = Column(Integer, ForeignKey("managers.id"))
     manager = relationship("Manager", back_populates="shifts")
 
-# Create tables
-Base.metadata.create_all(engine)
-
-# Create session
-Session = sessionmaker(bind=engine)
-session = Session()
-
-# Your test data and assertions can follow here...
